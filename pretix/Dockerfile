@@ -1,10 +1,11 @@
 FROM pretix/standalone
 
+COPY pretix/po/django.po .
+COPY pretix/po/djangojs.po .
+
 USER pretixuser
 
-RUN cd /pretix/src/pretix/locale/de_Informal/LC_MESSAGES
-
-COPY ./po/django.po ./pretix/src/pretic/locale/de_Informal/LC_MESSAGES
-COPY ./po/djangojs.po ./pretix/src/pretic/locale/de_Informal/LC_MESSAGES
+RUN cp django.po /pretix/src/pretix/locale/de_Informal/LC_MESSAGES/django.po
+RUN cp djangojs.po /pretix/src/pretix/locale/de_Informal/LC_MESSAGES/djangojs.po
 
 RUN cd /pretix/src && make production
