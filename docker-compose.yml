@@ -4,8 +4,8 @@ version: '2'
 services:
 
   db:
-    build: db
-    read_only: true
+    image: postgres:10.5
+    #read_only: true
     restart: unless-stopped
     volumes:
       - ./volumes/db/var/lib/postgresql/data:/var/lib/postgresql/data
@@ -28,8 +28,11 @@ services:
           - redis
 
   pretix:
-    image: pretix/standalone:stable
+    #image: pretix/standalone:stable
     restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./pretix/Dockerfile
     volumes:
       - ./volumes/pretix-data:/data
       - ./volumes/pretix:/etc/pretix
@@ -42,4 +45,3 @@ services:
 
 networks:
   jh-pretix-net:
-
